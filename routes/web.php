@@ -3,10 +3,16 @@
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
+// Frontend
+require __DIR__.'/frontend.php';
+
+/*
 Route::inertia('/', 'welcome', [
     'canRegister' => Features::enabled(Features::registration()),
 ])->name('home');
+*/
 
+// App (Inertia)
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'dashboard')->name('dashboard');
 });
