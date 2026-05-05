@@ -11,7 +11,7 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/js/frontend/app.ts',
-                'resources/css/frondend/app.scss',
+                'resources/css/frontend/app.scss',
                 'resources/css/app.css',
                 'resources/js/app.tsx'
             ],
