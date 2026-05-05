@@ -19,9 +19,22 @@ type Props = {
 export function UserMenuContent({ user }: Props) {
     const cleanup = useMobileNavigation();
 
+    /**
+     * Force a full redirect after logout because the dashboard and public site
+     * are two separate frontend environments.
+     */
     const handleLogout = () => {
         cleanup();
-        router.flushAll();
+        router.post(
+            logout(),
+            {},
+            {
+                onFinish: () => {
+                    router.flushAll();
+                    window.location.assign('/');
+                },
+            },
+        );
     };
 
     return (
@@ -46,17 +59,13 @@ export function UserMenuContent({ user }: Props) {
                 </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-                <Link
-                    className="block w-full cursor-pointer"
-                    href={logout()}
-                    as="button"
-                    onClick={handleLogout}
-                    data-test="logout-button"
-                >
-                    <LogOut className="mr-2" />
-                    Log out
-                </Link>
+            <DropdownMenuItem
+                className="block w-full cursor-pointer"
+                onClick={handleLogout}
+                data-test="logout-button"
+            >
+                <LogOut className="mr-2" />
+                Log out
             </DropdownMenuItem>
         </>
     );

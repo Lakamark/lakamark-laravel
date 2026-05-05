@@ -3,6 +3,7 @@
 namespace App\Concerns;
 
 use App\Models\User;
+use App\Rules\User\UsernameFormatRule;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Validation\Rule;
 
@@ -18,6 +19,7 @@ trait ProfileValidationRules
         return [
             'name' => $this->nameRules(),
             'email' => $this->emailRules($userId),
+            'username' => $this->usernameRules($userId),
         ];
     }
 
@@ -47,5 +49,39 @@ trait ProfileValidationRules
                 ? Rule::unique(User::class)
                 : Rule::unique(User::class)->ignore($userId),
         ];
+    }
+
+    /**
+     * Get the validation rules used to validate a username.
+     *
+     * Handles both create and update scenarios.
+     *
+     * @param  int|null  $userId  The ID of the user to ignore during unique validation (for updates)
+     * @return array<int, ValidationRule|string>
+     */
+    protected function usernameRules(?int $userId = null): array
+    {
+        $uniqueRule = Rule::unique(User::class, 'username');
+
+        if ($userId !== null) {
+            $uniqueRule->ignore($userId);
+        }
+
+        return [
+            'required',
+            'string',
+            'min:3',
+            'max:50',
+            new UsernameFormatRule,
+            $uniqueRule,
+        ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'email' => strtolower($this->email),
+            'username' => strtolower($this->username),
+        ]);
     }
 }
