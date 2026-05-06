@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Domains\Blog\CMS;
+namespace Tests\Fixtures\CMS;
 
 use App\Domains\Blog\Models\Post;
 use App\Domains\CMS\Support\AbstractCmsResource;
 
-class PostCmsResource extends AbstractCmsResource
+class FakeCmsResource extends AbstractCmsResource
 {
     public function label(): string
     {
-        return 'Posts';
+        return 'Post';
     }
 
     public function model(): string
@@ -24,6 +24,6 @@ class PostCmsResource extends AbstractCmsResource
 
     public function componentPath(): string
     {
-        return 'dashboard/posts';
+        return 'Dashboard/Posts';
     }
 }

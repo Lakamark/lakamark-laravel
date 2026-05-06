@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import { register } from '@/routes';
-import { store } from '@/routes/login';
+import { store as loginStore } from '@/routes/login';
 import { request } from '@/routes/password';
 
 type Props = {
@@ -27,7 +27,8 @@ export default function Login({
             <Head title="Log in" />
 
             <Form
-                {...store.form()}
+                action={loginStore().url}
+                method={loginStore().method}
                 resetOnSuccess={['password']}
                 className="flex flex-col gap-6"
             >

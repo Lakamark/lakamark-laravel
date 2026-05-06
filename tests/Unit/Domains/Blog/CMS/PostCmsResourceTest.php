@@ -9,7 +9,7 @@ it('describes the post cms resource', function (): void {
     expect($resource->label())->toBe('Posts')
         ->and($resource->model())->toBe(Post::class)
         ->and($resource->routePrefix())->toBe('dashboard.posts')
-        ->and($resource->componentPath())->toBe('Dashboard/Posts');
+        ->and($resource->componentPath())->toBe('dashboard/posts');
 });
 
 it('builds cms route names', function (): void {
@@ -25,7 +25,7 @@ it('builds inertia component paths', function (): void {
     $resource = new PostCmsResource;
 
     expect($resource->component('Index'))
-        ->toBe('Dashboard/Posts/Index')
-        ->and($resource->component('Create'))
-        ->toBe('Dashboard/Posts/Create');
+        ->toBe('dashboard/posts/index')
+        ->and($resource->component('create'))
+        ->toBe('dashboard/posts/create');
 });

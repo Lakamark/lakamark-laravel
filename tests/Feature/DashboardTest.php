@@ -4,7 +4,7 @@ use App\Domains\User\Role;
 use App\Models\User;
 
 test('guests are redirected to the login page', function () {
-    $response = $this->get(route('dashboard'));
+    $response = $this->get(route('dashboard.index'));
     $response->assertRedirect(route('login'));
 });
 
@@ -14,6 +14,6 @@ test('authenticated users can visit the dashboard', function () {
     ]);
     $this->actingAs($user);
 
-    $response = $this->get(route('dashboard'));
+    $response = $this->get(route('dashboard.index'));
     $response->assertOk();
 });

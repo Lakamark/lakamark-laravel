@@ -31,6 +31,6 @@ abstract class AbstractCmsResource implements CmsResource
      */
     public function component(string $page): string
     {
-        return "{$this->componentPath()}/$page";
+        return strtolower("{$this->componentPath()}/$page");
     }
 }

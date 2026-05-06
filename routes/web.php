@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CMS\PostCmsController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
@@ -16,9 +17,17 @@ Route::inertia('/', 'welcome', [
 Route::middleware([
     'auth',
     'verified',
-    'role:admin,moderator,editor']
-)->group(function () {
-    Route::inertia('dashboard', 'dashboard')->name('dashboard');
-});
+    'role:admin,moderator,editor',
+])
+    ->prefix('dashboard')
+    ->name('dashboard.')
+    ->group(function (): void {
+
+        Route::inertia('/', 'dashboard')
+            ->name('index');
+
+        Route::resource('/posts', PostCmsController::class)
+            ->names('posts');
+    });
 
 require __DIR__.'/settings.php';
