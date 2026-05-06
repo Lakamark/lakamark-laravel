@@ -13,7 +13,11 @@ Route::inertia('/', 'welcome', [
 */
 
 // App (Inertia)
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware([
+    'auth',
+    'verified',
+    'role:admin,moderator,editor']
+)->group(function () {
     Route::inertia('dashboard', 'dashboard')->name('dashboard');
 });
 

@@ -16,6 +16,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
     'email',
     'username',
     'password',
+    'role',
 ])]
 #[Hidden([
     'password',

@@ -71,7 +71,7 @@ trait ProfileValidationRules
             'required',
             'string',
             'min:3',
-            'max:50',
+            'max:30',
             new UsernameFormatRule,
             $uniqueRule,
         ];
