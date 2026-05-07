@@ -1,34 +1,57 @@
-type Props = {
-    resource: {
-        label: string;
-        routePrefix: string;
-    };
+import { CollectionPagination } from '@/components/collection-pagination';
+import { DataTable } from '@/components/data-table';
+import { StatusBadge } from '@/components/status-badge';
+import { withAppLayout } from '@/layouts/app-layout';
+import posts from '@/routes/dashboard/posts';
+import type { BreadcrumbItem, PaginatedCollection, Post } from '@/types';
 
-    posts: {
-        id: number;
-        title: string;
-        slug: string;
-        status: string;
-        published_at: string | null;
-    }[];
-};
+interface PostsIndexProps {
+    collection: PaginatedCollection<Post>;
+}
 
-export default function Index({ resource, posts }: Props) {
+const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Posts',
+        href: posts.index().url,
+    },
+];
+
+function PostsIndex({ collection }: PostsIndexProps) {
     return (
-        <div className="space-y-6">
-            <header>
-                <h1 className="text-2xl font-bold">{resource.label}</h1>
-            </header>
-
-            <div className="space-y-2">
-                {posts.map((post) => (
-                    <article key={post.id} className="rounded-xl border p-4">
-                        <h2 className="font-semibold">{post.title}</h2>
-
-                        <p className="text-sm opacity-70">{post.status}</p>
-                    </article>
-                ))}
-            </div>
+        <div className="space-y-4">
+            <DataTable
+                collection={collection}
+                columns={[
+                    { key: 'id', label: 'ID' },
+                    { key: 'title', label: 'Title' },
+                    {
+                        key: 'status',
+                        label: 'Status',
+                        render: (post) => (
+                            <StatusBadge status={post.status}>
+                                {post.status}
+                            </StatusBadge>
+                        ),
+                    },
+                    {
+                        key: 'published_at',
+                        label: 'Published',
+                        render: (post) => post.published_at ?? '—',
+                    },
+                    {
+                        key: 'id',
+                        label: 'Actions',
+                        render: () => (
+                            <div className="flex items-center gap-2">
+                                {/* Actions */}
+                            </div>
+                        ),
+                    },
+                ]}
+            />
+            <CollectionPagination collection={collection} />
         </div>
     );
 }
+
+export default withAppLayout(breadcrumbs, PostsIndex);

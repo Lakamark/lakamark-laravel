@@ -19,15 +19,19 @@ class PostCmsController extends Controller
                 'routePrefix' => $resource->routePrefix(),
             ],
 
-            'posts' => Post::query()
+            'collection' => Post::query()
                 ->latest()
-                ->get([
-                    'id',
-                    'title',
-                    'slug',
-                    'status',
-                    'published_at',
-                ]),
+                ->paginate(
+                    perPage: 10,
+                    columns: [
+                        'id',
+                        'title',
+                        'slug',
+                        'status',
+                        'published_at',
+                    ]
+                )
+            ->withQueryString()
         ]);
     }
 
