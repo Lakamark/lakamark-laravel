@@ -32,19 +32,17 @@ class RoleMiddleware
             abort(Response::HTTP_UNAUTHORIZED);
         }
 
-        $userRole = Role::tryFrom($user->role);
-
-        if (! $userRole) {
-            abort(Response::HTTP_UNAUTHORIZED);
-        }
-
-        $allowed = array_map(
-            static fn (string $role): ?Role => Role::tryFrom($role),
-            $allowedRoles,
+        $allowed = array_filter(
+            array_map(
+                static fn (string $role): ?Role => Role::tryFrom($role),
+                $allowedRoles,
+            ),
         );
 
-        if (! in_array($userRole, $allowed, true)) {
-            abort(Response::HTTP_UNAUTHORIZED);
+        if (! $user->role->isOneOf(...$allowed)) {
+            return redirect()->route(
+                $user->role->homeRoute(),
+            );
         }
 
         return $next($request);
