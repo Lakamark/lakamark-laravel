@@ -39,9 +39,3 @@ The platform focuses on:
 The architecture intentionally evolves progressively during development.
 
 ---
-
-## Project Status
-
-⚠️ Active development.
-
-Some parts of the platform and documentation are still experimental and may evolve significantly over time.

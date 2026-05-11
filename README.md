@@ -34,8 +34,19 @@ This transition also provides an opportunity to progressively rethink parts of t
 
 The former Symfony-based platform (`lakamark.web`) is no longer actively maintained and is now preserved as an archived technical reference.
 
-
 ---
+
+## Technical Disclaimer
+
+The decision to migrate **Laka Mark** from Symfony to Laravel is based on my own experience, project needs and personal 
+development workflow.
+
+This does not mean that Laravel is objectively better than Symfony, or that Symfony was a poor technology choice. Symfony remains a powerful and mature framework.
+
+For this specific project, Laravel currently provides a workflow, ecosystem and development experience that better aligns with the direction and goals of the platform.
+
+Technology choices are contextual. What works well for LakaMark may not necessarily be the best choice for another type of project.
+
 
 ## Tech Stack
 
