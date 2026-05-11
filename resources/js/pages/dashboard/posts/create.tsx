@@ -4,10 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
+import { Textarea } from '@/components/ui/textarea';
 import AppLayout from '@/layouts/app-layout';
 
 import { store as postStore } from '@/routes/dashboard/posts';
-import { Textarea } from '@/components/ui/textarea';
 
 export default function CreatePost() {
     return (

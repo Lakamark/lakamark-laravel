@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Domains\User\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -12,11 +13,28 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
+        // Admin
         User::factory()->create([
-            'email' => 'lakamark@lakarmakark.com',
+            'email' => 'lakamark@lakamark.com',
             'username' => 'Lakamark',
-            'role' => 'admin',
+            'role' => Role::Admin,
         ]);
+
+        // Editor
+        User::factory()->create([
+            'email' => 'editor@lakamark.com',
+            'username' => 'Editor',
+            'role' => Role::Editor,
+        ]);
+
+        // Moderator
+        User::factory()->create([
+            'email' => 'moderator@lakamark.com',
+            'username' => 'Moderator',
+            'role' => Role::Moderator,
+        ]);
+
+        // Basic user
+        User::factory(5)->create();
     }
 }

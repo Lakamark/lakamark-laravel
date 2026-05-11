@@ -39,7 +39,8 @@ function PostsIndex({ collection }: PostsIndexProps) {
                         render: (post) => post.published_at ?? '—',
                     },
                     {
-                        key: 'id',
+                        type: 'display',
+                        id: 'actions',
                         label: 'Actions',
                         render: () => (
                             <div className="flex items-center gap-2">
