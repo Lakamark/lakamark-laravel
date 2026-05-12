@@ -13,7 +13,7 @@ export class TurboKernel {
     /**
      * Starts the Turbo lifecycle integration.
      */
-    public start(): void {
+    public boot(): void {
         document.addEventListener('turbo:load', this.handleLoad);
 
         document.addEventListener('turbo:before-cache', this.handleBeforeCache);

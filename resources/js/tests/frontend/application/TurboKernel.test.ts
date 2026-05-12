@@ -9,7 +9,7 @@ describe('TurboKernel', () => {
 
         const kernel = new TurboKernel(app);
 
-        kernel.start();
+        kernel.boot();
 
         document.dispatchEvent(new Event('turbo:load'));
 
@@ -24,7 +24,7 @@ describe('TurboKernel', () => {
 
         const kernel = new TurboKernel(app);
 
-        kernel.start();
+        kernel.boot();
 
         document.dispatchEvent(new Event('turbo:before-cache'));
 
@@ -39,7 +39,7 @@ describe('TurboKernel', () => {
 
         const kernel = new TurboKernel(app);
 
-        kernel.start();
+        kernel.boot();
         kernel.stop();
 
         document.dispatchEvent(new Event('turbo:load'));
