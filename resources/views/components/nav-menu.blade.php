@@ -15,6 +15,9 @@
                     ])
                     href="{{ $item['url'] }}"
                     title="{{ $item['title'] ?? $item['label'] }}"
+                    @if (($item['turbo'] ?? true) === false)
+                        data-turbo="false"
+                    @endif
                     @if ($item['active'] ?? false)
                         aria-current="page"
                     @endif

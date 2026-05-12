@@ -25,7 +25,7 @@ $breakpoints: (
   $value: map.get($breakpoints, $key);
 
   @if $value == null {
-    @error "Unknown breakpoint `#{$key}`. Available: #{map-keys($breakpoints)}";
+    @error "Unknown breakpoint `#{$key}`. Available: #{map.keys($breakpoints)}";
   }
 
   @media (min-width: $value) {
@@ -43,7 +43,7 @@ $breakpoints: (
   $value: map.get($breakpoints, $key);
 
   @if $value == null {
-    @error "Unknown breakpoint `#{$key}`. Available: #{map-keys($breakpoints)}";
+    @error "Unknown breakpoint `#{$key}`. Available: #{map.keys($breakpoints)}";
   }
 
   @media (max-width: ($value - 0.02px)) {
@@ -62,11 +62,11 @@ $breakpoints: (
   $max: map.get($breakpoints, $to);
 
   @if $min == null {
-    @error "Unknown breakpoint `#{$from}`. Available: #{map-keys($breakpoints)}";
+    @error "Unknown breakpoint `#{$from}`. Available: #{map.keys($breakpoints)}";
   }
 
   @if $max == null {
-    @error "Unknown breakpoint `#{$to}`. Available: #{map-keys($breakpoints)}";
+    @error "Unknown breakpoint `#{$to}`. Available: #{map.keys($breakpoints)}";
   }
 
   @media (min-width: $min) and (max-width: ($max - 0.02px)) {

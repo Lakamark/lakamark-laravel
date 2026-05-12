@@ -27,6 +27,7 @@ class UserNavigation extends Component
                     'label' => 'Account',
                     'url' => route('account.index'),
                     'title' => 'My Account',
+                    'turbo' => false,
                 ],
             ]
             : [
@@ -34,11 +35,13 @@ class UserNavigation extends Component
                     'label' => 'Login',
                     'url' => route('login'),
                     'title' => 'Login to your account',
+                    'turbo' => false,
                 ],
                 [
                     'label' => 'Sign up',
                     'url' => route('register'),
                     'title' => 'Sign Up',
+                    'turbo' => false,
                 ],
             ];
     }
