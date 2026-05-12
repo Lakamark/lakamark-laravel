@@ -60,6 +60,7 @@
     </head>
     <body>
         <div class="page-wrapper" id="app">
+            @include('/partials/header')
             <main class="page-content">
                 @yield('content')
             </main>
