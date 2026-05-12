@@ -14,6 +14,8 @@ export class TurboKernel {
      * Starts the Turbo lifecycle integration.
      */
     public boot(): void {
+        this.app.mount()
+
         document.addEventListener('turbo:load', this.handleLoad);
 
         document.addEventListener('turbo:before-cache', this.handleBeforeCache);

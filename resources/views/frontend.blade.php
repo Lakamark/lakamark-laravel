@@ -50,7 +50,7 @@
                         'dashboard' => route('dashboard.index'),
                     ]
                 ],
-                'apiEndpoints' => [],
+                'apiEndpoints' => (object)[],
                 'features' => [
                     'darkMode' => true,
                     'accountMenu' => true,

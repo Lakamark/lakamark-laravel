@@ -1,19 +1,18 @@
-import type { AppModule } from '@/frontend/core/contracts';
+import type { AppConfig } from '@/frontend/config';
+import type { AppModule } from './contracts';
 
 /**
- * Main frontend application runner.
+ * Application module orchestrator.
  *
- * Responsible for registering, mounting and destroying
- * application modules.
+ * Responsible for mounting and destroying frontend modules.
  */
 export class AppRunner {
-    /**
-     * Registered application modules.
-     */
     private readonly modules: AppModule[] = [];
 
+    constructor(private readonly config: AppConfig) {}
+
     /**
-     * Registers a new application module.
+     * Registers a module into the application.
      */
     public register(module: AppModule): this {
         this.modules.push(module);
@@ -22,27 +21,31 @@ export class AppRunner {
     }
 
     /**
-     * Mounts all registered modules.
+     * Get the registered modules list.
+     */
+    public getModules(): readonly AppModule[] {
+        return [...this.modules];
+    }
+
+    /**
+     * Mounts all eligible modules.
      */
     public mount(): void {
         for (const module of this.modules) {
-            module.mount();
+            if (module.shouldMount && !module.shouldMount(this.config)) {
+                continue;
+            }
+
+            module.mount(this.config);
         }
     }
 
     /**
-     * Destroys all registered modules.
+     * Destroys all mounted modules.
      */
     public destroy(): void {
         for (const module of this.modules) {
             module.destroy();
         }
-    }
-
-    /**
-     * Returns all registered modules.
-     */
-    public getModules(): AppModule[] {
-        return this.modules;
     }
 }

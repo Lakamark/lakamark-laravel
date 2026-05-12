@@ -1,20 +1,25 @@
+import type { AppConfig } from '@/frontend/config';
 import { AbstractModule } from '@/frontend/core';
 
 type TestModuleOptions = {
-    onMount?: () => void;
+    shouldMount?: (config: AppConfig) => boolean;
+    onMount?: (config: AppConfig) => void;
     onDestroy?: () => void;
 };
 
-/**
- * Test frontend module fixture.
- */
 export class TestModule extends AbstractModule {
-    public constructor(private readonly options: TestModuleOptions = {}) {
+    moduleName = 'TestModule';
+
+    constructor(private readonly options: TestModuleOptions = {}) {
         super();
     }
 
-    protected onMount(): void {
-        this.options.onMount?.();
+    shouldMount(config: AppConfig): boolean {
+        return this.options.shouldMount?.(config) ?? true;
+    }
+
+    protected onMount(config: AppConfig): void {
+        this.options.onMount?.(config);
     }
 
     protected onDestroy(): void {

@@ -1,10 +1,12 @@
 import { describe, expect, it, vi } from 'vitest';
 import { TurboKernel } from '@/frontend/application';
+import type { AppConfig } from '@/frontend/config';
 import { AppRunner } from '@/frontend/core';
+import { createAppConfig } from '@/tests/frontend/factories';
 
-describe('TurboKernel', () => {
-    it('mounts the app on turbo:load', () => {
-        const app = new AppRunner();
+describe('TurboKernel', (): void => {
+    it('mounts the app on turbo:load', (): void => {
+        const app = new AppRunner(createAppConfig());
         const mount = vi.spyOn(app, 'mount');
 
         const kernel = new TurboKernel(app);
@@ -13,13 +15,15 @@ describe('TurboKernel', () => {
 
         document.dispatchEvent(new Event('turbo:load'));
 
-        expect(mount).toHaveBeenCalledOnce();
+        expect(mount).toHaveBeenCalledTimes(2);
+
 
         kernel.stop();
     });
 
-    it('destroys the app on turbo:before-cache', () => {
-        const app = new AppRunner();
+    it('destroys the app on turbo:before-cache', (): void => {
+        const config: AppConfig = createAppConfig();
+        const app = new AppRunner(config);
         const destroy = vi.spyOn(app, 'destroy');
 
         const kernel = new TurboKernel(app);
@@ -33,8 +37,8 @@ describe('TurboKernel', () => {
         kernel.stop();
     });
 
-    it('removes listeners when stopped', () => {
-        const app = new AppRunner();
+    it('removes listeners when stopped', (): void => {
+        const app = new AppRunner(createAppConfig());
         const mount = vi.spyOn(app, 'mount');
 
         const kernel = new TurboKernel(app);
@@ -44,6 +48,6 @@ describe('TurboKernel', () => {
 
         document.dispatchEvent(new Event('turbo:load'));
 
-        expect(mount).not.toHaveBeenCalled();
+        expect(mount).toHaveBeenCalledTimes(1);
     });
 });

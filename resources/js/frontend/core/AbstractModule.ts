@@ -1,57 +1,46 @@
-import type { AppModule } from '@/frontend/core/contracts';
+import type { AppConfig } from '@/frontend/config';
+import type { AppModule } from './contracts';
 
 /**
- * Base class for all frontend application modules.
+ * Base class for frontend modules.
  *
- * Provides a controlled lifecycle with mount and destroy guards
- * to prevent invalid state transitions.
+ * It prevents double mounting and double destroying while letting concrete
+ * modules implement only their own lifecycle behavior.
  */
 export abstract class AbstractModule implements AppModule {
-    /**
-     * Tracks the mounted state of the module.
-     */
+    abstract readonly moduleName: string;
+
     private mounted: boolean = false;
 
-    /**
-     * Mounts the module.
-     */
-    public mount(): void {
+    shouldMount(config: AppConfig): boolean {
+        void config;
+
+        return true;
+    }
+
+    mount(config: AppConfig): void {
         if (this.mounted) {
             return;
         }
 
-        this.onMount();
-
+        this.onMount(config);
         this.mounted = true;
     }
 
-    /**
-     * Destroys the module.
-     */
-    public destroy(): void {
+    destroy(): void {
         if (!this.mounted) {
             return;
         }
 
         this.onDestroy();
-
         this.mounted = false;
     }
 
-    /**
-     * Returns whether the module is mounted.
-     */
-    public isMounted(): boolean {
+    isMounted(): boolean {
         return this.mounted;
     }
 
-    /**
-     * Internal mount hook.
-     */
-    protected abstract onMount(): void;
+    protected abstract onMount(config: AppConfig): void;
 
-    /**
-     * Internal destroy hook.
-     */
     protected abstract onDestroy(): void;
 }
