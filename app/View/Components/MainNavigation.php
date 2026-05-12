@@ -23,7 +23,7 @@ class MainNavigation extends Component
         $this->items = [
             [
                 'label' => 'Blog',
-                'url' => '#',
+                'url' => route('blog.index'),
                 'title' => 'Read the Laka Mark blog.',
                 'active' => request()->routeIs('blog.*'),
             ],

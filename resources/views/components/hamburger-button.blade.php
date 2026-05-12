@@ -7,6 +7,7 @@
     <button
             class="header__hamburger"
             type="button"
+            id="menu-toggle"
             aria-controls="{{ $controls }}"
             aria-expanded="false"
             aria-label="{{ $label }}"

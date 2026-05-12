@@ -11,9 +11,11 @@
     z-index: 1000;
 
     width: 100%;
+    height: var(--header-height);
 
     background: color-mix(in srgb, var(--color-surface-overlay) 88%, transparent);
     backdrop-filter: blur(var(--effect-blur-lg));
+    transform: none;
   }
 
   .header {
@@ -69,7 +71,12 @@
   .nav-menu-wrapper {
     width: 100%;
     padding: 0 var(--space-2) var(--space-2);
-    display: none;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(0);
+
   }
 
   .nav-menu {
@@ -169,6 +176,13 @@
     transform: rotate(-45deg);
   }
 
+  .header-wrapper.is-menu-open .header {
+    position: fixed;
+    inset: 0;
+
+    height: 100dvh;
+  }
+
   .header-wrapper.is-menu-open {
     position: fixed;
     inset: 0;
@@ -176,13 +190,19 @@
     width: 100%;
     height: 100dvh;
 
-    overflow-y: auto;
+    overflow: hidden;
   }
 
   .header-wrapper.is-menu-open .nav-menu-wrapper {
-    display: block;
-    height: 100%;
+    height: calc(100dvh - var(--header-height));
     overflow-y: auto;
+
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+   transform: none;
   }
 
   @include responsive.media-up(desktop) {
@@ -209,6 +229,11 @@
       border-bottom: 1px solid var(--color-border-subtle);
 
       height: var(--header-height);
+
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: none;
     }
 
     .nav-menu {

@@ -9,6 +9,10 @@
             color 0.3s ease;
   }
 
+  body.is-menu-open {
+    overflow: hidden;
+  }
+
   ::selection {
     background-color: var(--color-accent);
     color: var(--primitive-color-white);

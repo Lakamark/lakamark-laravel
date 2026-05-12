@@ -1,1 +1,0 @@
-export {createAppConfig} from './appConfigFactory';
