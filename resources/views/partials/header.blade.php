@@ -5,7 +5,7 @@
             <div class="header__brand">
                 <div class="header__brand-logo">
                     <a href="{{ route('home') }}" title="Home Page">
-                        logo here
+                        <x-brand.logo/>
                     </a>
                 </div>
 

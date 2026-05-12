@@ -1,3 +1,11 @@
-<div>
-    <!-- Simplicity is the ultimate sophistication. - Leonardo da Vinci -->
-</div>
+@props([
+    'name'
+])
+
+<svg
+        {{ $attributes }}
+        fill="none"
+        aria-hidden="true"
+>
+    <use href="{{ asset('images/icons.svg') }}#{{ $name }}"></use>
+</svg>
