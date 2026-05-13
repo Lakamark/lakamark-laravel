@@ -1,5 +1,7 @@
 # LakaMark Laravel
 
+[![tests](https://github.com/Lakamark/lakamark-laravel/actions/workflows/tests.yml/badge.svg)](https://github.com/Lakamark/lakamark-laravel/actions/workflows/tests.yml)
+
 Official LakaMark platform built with Laravel, Inertia.js and React.
 
 ---
