@@ -10,5 +10,5 @@ export function queryOptional<T extends Element>(
     root: ParentNode,
     selector: string,
 ): T | null {
-    return root.querySelector(selector) as T | null;
+    return root.querySelector<T>(selector);
 }

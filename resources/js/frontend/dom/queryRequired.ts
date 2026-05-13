@@ -15,11 +15,11 @@ export function queryRequired<T extends Element>(
     root: ParentNode,
     selector: string,
 ): T {
-    const element = root.querySelector(selector);
+    const element = root.querySelector<T>(selector);
 
     if (!element) {
         throw new Error(`Missing required element: "${selector}".`);
     }
 
-    return element as T;
+    return element;
 }

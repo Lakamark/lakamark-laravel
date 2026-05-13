@@ -8,15 +8,24 @@ import type { AppConfig } from '@/frontend/dom/AppConfig';
  * @throws Error When the configuration is invalid.
  */
 export function validateConfig(config: AppConfig): void {
-    if (!config.app.name) {
-        throw new Error('Missing application name.');
-    }
+    assertRequired(config.app.name, 'application name');
+    assertRequired(config.app.env, 'application environment');
+    assertRequired(config.routes.home, 'home route');
+}
 
-    if (!config.app.env) {
-        throw new Error('Missing application environment.');
-    }
-
-    if (!config.routes.home) {
-        throw new Error('Missing home route.');
+/**
+ * Ensures a configuration value exists.
+ *
+ * @param value - Value to validate.
+ * @param field - Human-readable field name.
+ *
+ * @throws Error When the value is empty.
+ */
+function assertRequired(
+    value: unknown,
+    field: string,
+): asserts value {
+    if (!value) {
+        throw new Error(`Missing ${field}.`);
     }
 }

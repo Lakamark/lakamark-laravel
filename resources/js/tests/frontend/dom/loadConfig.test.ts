@@ -1,3 +1,4 @@
+import type { AppConfig} from '@/frontend/dom';
 import { loadConfig } from '@/frontend/dom';
 
 describe('loadConfig', () => {
@@ -42,26 +43,26 @@ describe('loadConfig', () => {
             </script>
         `;
 
-        const config = loadConfig();
+        const config: AppConfig = loadConfig();
 
         expect(config.app.name).toBe('LakaMark');
         expect(config.app.locale).toBe('fr');
         expect(config.routes.account.dashboard).toBe('/dashboard');
     });
 
-    it('throws when the config element is missing', () => {
+    it('throws when the config element is missing', (): void => {
         expect(() => loadConfig()).toThrow(
-            'Missing application config element.',
+            'Missing required element: "#lmk-config".',
         );
     });
 
-    it('throws when the config element is empty', () => {
+    it('throws when the config element is empty', (): void => {
         document.body.innerHTML = `
             <script id="lmk-config" type="application/json"></script>
         `;
 
         expect(() => loadConfig()).toThrow(
-            'Missing application config content.',
+            'Missing config content.',
         );
     });
 });

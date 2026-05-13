@@ -1,8 +1,6 @@
 import '@hotwired/turbo';
-import { queryRequired } from '@/frontend/dom';
+import { loadConfig } from '@/frontend/dom';
 
-const config = queryRequired<HTMLScriptElement>(
-    document, '#lmk-config'
-);
+const config = loadConfig();
 
 console.log(config);

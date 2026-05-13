@@ -1,5 +1,7 @@
 import type { AppConfig } from '@/frontend/dom/AppConfig';
 import { parseConfig } from '@/frontend/dom/parseConfig';
+import { queryRequired } from '@/frontend/dom/queryRequired';
+import { validateConfig } from '@/frontend/dom/validateConfig';
 
 const DEFAULT_CONFIG_SELECTOR = '#lmk-config';
 
@@ -18,19 +20,26 @@ const DEFAULT_CONFIG_SELECTOR = '#lmk-config';
 export function loadConfig(
     selector: string = DEFAULT_CONFIG_SELECTOR
 ): AppConfig {
-    const element = document.querySelector<HTMLScriptElement>(selector);
+    const element = queryRequired<HTMLScriptElement>(
+        document,
+        selector,
+    );
 
     if (!element) {
         throw new Error('Missing application config element.');
     }
 
-    const rawConfig = element.textContent?.trim();
+    const rawConfig: string = element.textContent?.trim();
 
     if (!rawConfig) {
-        throw new Error('Missing application config content.');
+        throw new Error(`Missing config content.`);
     }
 
-    return parseConfig(rawConfig);
+    const config: AppConfig = parseConfig(rawConfig);
+
+    validateConfig(config);
+
+    return config;
 
 
 }
