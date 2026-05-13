@@ -1,32 +1,30 @@
-import { describe, expect, it, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { TurboKernel } from '@/frontend/application';
 import type { AppRunner } from '@/frontend/core';
 
-describe('TurboKernel', () => {
+describe('TurboKernel', (): void => {
     let app: Pick<AppRunner, 'mount' | 'destroy'>;
 
-    beforeEach(() => {
+    beforeEach((): void => {
         app = {
             mount: vi.fn(),
             destroy: vi.fn(),
         };
     });
 
-    it('mounts the application when booting', () => {
+    it('does not mount the application when booting', (): void => {
         const kernel = new TurboKernel(app as AppRunner);
 
         kernel.boot();
 
-        expect(app.mount).toHaveBeenCalledOnce();
+        expect(app.mount).not.toHaveBeenCalled();
     });
 
-    it('re-mounts the application on turbo:load', () => {
+    it('re-mounts the application on turbo:load', (): void => {
         const kernel = new TurboKernel(app as AppRunner);
 
         kernel.boot();
-
-        vi.clearAllMocks();
 
         document.dispatchEvent(new Event('turbo:load'));
 
@@ -34,19 +32,17 @@ describe('TurboKernel', () => {
         expect(app.mount).toHaveBeenCalledOnce();
     });
 
-    it('destroys the application on turbo:before-cache', () => {
+    it('destroys the application on turbo:before-cache', (): void => {
         const kernel = new TurboKernel(app as AppRunner);
 
         kernel.boot();
-
-        vi.clearAllMocks();
 
         document.dispatchEvent(new Event('turbo:before-cache'));
 
         expect(app.destroy).toHaveBeenCalledOnce();
     });
 
-    it('removes listeners when stopped', () => {
+    it('removes listeners when stopped', (): void => {
         const kernel = new TurboKernel(app as AppRunner);
 
         kernel.boot();
@@ -61,16 +57,19 @@ describe('TurboKernel', () => {
         expect(app.destroy).not.toHaveBeenCalled();
     });
 
-    it('does not boot twice', () => {
+    it('does not register listeners twice', (): void => {
         const kernel = new TurboKernel(app as AppRunner);
 
         kernel.boot();
         kernel.boot();
 
+        document.dispatchEvent(new Event('turbo:load'));
+
+        expect(app.destroy).toHaveBeenCalledOnce();
         expect(app.mount).toHaveBeenCalledOnce();
     });
 
-    it('does not stop twice', () => {
+    it('does not stop twice', (): void => {
         const kernel = new TurboKernel(app as AppRunner);
 
         kernel.boot();

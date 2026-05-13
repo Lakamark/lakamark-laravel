@@ -33,12 +33,10 @@ export class TurboKernel implements AppKernel {
             return;
         }
 
-        this.booted = true;
-
         document.addEventListener('turbo:load', this.handleLoad);
         document.addEventListener('turbo:before-cache', this.handleBeforeCache);
 
-        this.app.mount();
+        this.booted = true;
     }
 
     /**
