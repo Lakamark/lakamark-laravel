@@ -1,5 +1,8 @@
 import type { AppContext } from '@/frontend/application';
-import type { AppModule } from '@/frontend/core/contracts';
+import type {
+    AppModule,
+    MountableApp
+} from '@/frontend/core/contracts';
 
 /**
  * Runs the frontend application modules.
@@ -10,7 +13,7 @@ import type { AppModule } from '@/frontend/core/contracts';
  * It receives a shared application context and passes it to every module
  * during the mount phase.
  */
-export class AppRunner {
+export class AppRunner implements MountableApp{
     /**
      * Registered application modules.
      */
