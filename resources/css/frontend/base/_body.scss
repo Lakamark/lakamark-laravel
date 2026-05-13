@@ -2,14 +2,16 @@
   body {
     background-color: var(--color-surface-canvas);
     font-family: var(--font-family-base), sans-serif;
-    font-size: var(--leading-base);
+    font-size: var(--text-base);
+    line-height: var(--leading-base);
     color: var(--color-text-default);
     transition:
             background-color 0.3s ease,
             color 0.3s ease;
   }
 
-  body.is-menu-open {
+  html.is-scroll-locked,
+  body.is-scroll-locked {
     overflow: hidden;
   }
 
@@ -22,7 +24,6 @@
     outline: 2px solid var(--color-accent);
     outline-offset: 2px;
   }
-
 
   @media (prefers-reduced-motion: reduce) {
     * {
