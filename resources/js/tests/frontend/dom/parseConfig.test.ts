@@ -1,49 +1,20 @@
-import type { AppConfig} from '@/frontend/dom';
+import type { AppConfig } from '@/frontend/dom';
 import { parseConfig } from '@/frontend/dom';
+import { createAppConfig } from '@/tests/fixtures';
 
-describe('parseConfig', () => {
-    it('parses a valid JSON config', () => {
-        const config: AppConfig = parseConfig(
-            JSON.stringify({
-                app: {
-                    name: 'LakaMark',
-                    env: 'local',
-                    locale: 'fr',
-                },
-                user: {
-                    id: null,
-                    username: null,
-                    role: null,
-                    theme: null,
-                    language: 'fr',
-                    isLogged: false,
-                    isStaff: false,
-                    canAccessDashboard: false,
-                },
-                routes: {
-                    home: '/',
-                    account: {
-                        login: '/login',
-                        logout: '/logout',
-                        register: '/register',
-                        dashboard: '/dashboard',
-                    },
-                },
-                apiEndpoints: {},
-                features: {
-                    darkMode: true,
-                    accountMenu: true,
-                },
-            }),
-        );
+describe('parseConfig', (): void => {
+    it('parses a valid JSON config', (): void => {
+        const json = JSON.stringify(createAppConfig());
+
+        const config: AppConfig = parseConfig(json);
 
         expect(config.app.name).toBe('LakaMark');
         expect(config.user.isLogged).toBe(false);
         expect(config.routes.account.login).toBe('/login');
     });
 
-    it('throws when JSON is invalid', () => {
-        expect(() => parseConfig('{invalid-json')).toThrow(
+    it('throws when JSON is invalid', (): void => {
+        expect((): AppConfig => parseConfig('{invalid-json')).toThrow(
             'Invalid application config JSON.',
         );
     });

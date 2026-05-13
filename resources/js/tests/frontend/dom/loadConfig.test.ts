@@ -1,5 +1,6 @@
 import type { AppConfig} from '@/frontend/dom';
 import { loadConfig } from '@/frontend/dom';
+import { mountAppConfig } from '@/tests/fixtures';
 
 describe('loadConfig', () => {
     beforeEach(() => {
@@ -7,41 +8,7 @@ describe('loadConfig', () => {
     });
 
     it('loads the config from the default DOM element', () => {
-        document.body.innerHTML = `
-            <script id="lmk-config" type="application/json">
-                {
-                    "app": {
-                        "name": "LakaMark",
-                        "env": "local",
-                        "locale": "fr"
-                    },
-                    "user": {
-                        "id": null,
-                        "username": null,
-                        "role": null,
-                        "theme": null,
-                        "language": "fr",
-                        "isLogged": false,
-                        "isStaff": false,
-                        "canAccessDashboard": false
-                    },
-                    "routes": {
-                        "home": "/",
-                        "account": {
-                            "login": "/login",
-                            "logout": "/logout",
-                            "register": "/register",
-                            "dashboard": "/dashboard"
-                        }
-                    },
-                    "apiEndpoints": {},
-                    "features": {
-                        "darkMode": true,
-                        "accountMenu": true
-                    }
-                }
-            </script>
-        `;
+        mountAppConfig();
 
         const config: AppConfig = loadConfig();
 
