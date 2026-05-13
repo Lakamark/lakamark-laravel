@@ -1,6 +1,8 @@
 import '@hotwired/turbo';
-import { loadConfig } from '@/frontend/dom';
+import { createApp, TurboKernel } from '@/frontend/application';
 
-const config = loadConfig();
+const app = createApp();
 
-console.log(config);
+const kernel = new TurboKernel(app);
+
+kernel.boot();
