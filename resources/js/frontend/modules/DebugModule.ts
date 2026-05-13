@@ -20,20 +20,7 @@ export class DebugModule extends AbstractModule {
             return;
         }
 
-        console.group(
-            '%cLakaMark Debug',
-            `
-        background: #000;
-        color: #22c55e;
-        padding: 4px 8px;
-        border-radius: 999px;
-        font-weight: bold;
-    `,
-        );
-
-        console.log(context.config);
-
-        console.groupEnd();
+        console.log('LakaMark Debug', structuredClone(context.config));
 
         this.mountBadge();
     }

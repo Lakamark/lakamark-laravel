@@ -15,6 +15,16 @@
             <nav class="nav-menu-wrapper" id="menuNav" aria-label="Main navigation" role="navigation">
                 <x-main-navigation />
                 <x-user-navigation />
+
+                @auth
+                    <form method="POST" action="{{ route('logout') }}" data-turbo="false">
+                        @csrf
+
+                        <button type="submit">
+                            Logout
+                        </button>
+                    </form>
+                @endauth
             </nav>
 
         </div>
