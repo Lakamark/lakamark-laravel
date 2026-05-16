@@ -8,6 +8,7 @@
             class="header__hamburger"
             type="button"
             id="menu-toggle"
+            data-lmk-hamburger
             aria-controls="{{ $controls }}"
             aria-expanded="false"
             aria-label="{{ $label }}"

@@ -1,8 +1,11 @@
 import type { AppContext } from '@/frontend/application';
 
-import { loadConfig } from '@/frontend/dom';
 import { AppRunner } from '@/frontend/core';
-import { DebugModule } from '@/frontend/modules';
+import { loadConfig } from '@/frontend/dom';
+import {
+    DebugModule,
+    HeaderModule
+} from '@/frontend/modules';
 
 /**
  * Creates the frontend application instance.
@@ -26,5 +29,6 @@ export function createApp(): AppRunner {
     };
 
     return new AppRunner(context)
-        .register(new DebugModule());
+        .register(new DebugModule())
+        .register(new HeaderModule());
 }

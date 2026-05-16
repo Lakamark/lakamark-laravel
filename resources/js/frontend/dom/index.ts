@@ -10,3 +10,9 @@ export {
     unlockBodyScroll,
     forceUnlockBodyScroll
 } from './bodyScrollLock';
+
+export {
+    $,
+    $$,
+    required$
+} from './query';

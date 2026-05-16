@@ -1,5 +1,5 @@
-<div class="header-wrapper" id="main-header">
-    <header class="header">
+<div class="header-wrapper" id="main-header"  data-lmk-header>
+    <header class="header" data-lmk-header-panel>
         <div class="header__inner">
 
             <div class="header__brand">
@@ -12,7 +12,13 @@
                 <x-hamburger-button />
             </div>
 
-            <nav class="nav-menu-wrapper" id="menuNav" aria-label="Main navigation" role="navigation">
+            <nav
+                    class="nav-menu-wrapper"
+                    id="menuNav"
+                    data-lmk-menu
+                    aria-label="Main navigation"
+                    role="navigation"
+            >
                 <x-main-navigation />
                 <x-user-navigation />
 
