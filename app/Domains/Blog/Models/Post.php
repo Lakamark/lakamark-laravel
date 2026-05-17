@@ -37,6 +37,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read Collection<int, Media> $media
  * @property-read int|null $media_count
  * @property-read User|null $moderator
+ *
  * @method static PostFactory factory($count = null, $state = [])
  * @method static Builder<static>|Post newModelQuery()
  * @method static Builder<static>|Post newQuery()
@@ -56,6 +57,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder<static>|Post whereTitle($value)
  * @method static Builder<static>|Post whereUpdatedAt($value)
  * @method static Builder<static>|Post whereUserId($value)
+ *
  * @mixin Eloquent
  */
 class Post extends Model
@@ -94,6 +96,14 @@ class Post extends Model
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function moderator(): BelongsTo
+    {
+        return $this->belongsTo(
+            User::class,
+            'moderated_by'
+        );
     }
 
     protected static function newFactory(): PostFactory

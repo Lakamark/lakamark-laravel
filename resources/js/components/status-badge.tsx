@@ -9,11 +9,13 @@ const statusBadgeVariants = cva('', {
     variants: {
         status: {
             draft: 'border-zinc-500/20 bg-zinc-500/15 text-zinc-400',
-
             published:
                 'border-emerald-500/20 bg-emerald-500/15 text-emerald-400',
-
             archived: 'border-red-500/20 bg-red-500/15 text-red-400',
+            pending: 'border-yellow-500/20 bg-yellow-500/15 text-yellow-400',
+            approved:
+                'border-emerald-500/20 bg-emerald-500/15 text-emerald-400',
+            rejected: 'border-red-500/20 bg-red-500/15 text-red-400',
         },
     },
 

@@ -2,58 +2,44 @@
 
 namespace App\Domains\Content\Shared\Queries;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Base query object.
- *
- * Responsibilities:
- * - Centralize query object behavior
- * - Provide pagination helpers
- * - Expose reusable filtering utilities
- * - Keep controllers lightweight
- *
- * Query objects are intended to encapsulate
- * complex filtering and visibility logic outside
- * of controllers.
  */
 abstract readonly class AbstractQuery
 {
     /**
      * Create a new query instance.
-     *
-     * @param  Request  $request  Current HTTP request instance.
      */
     public function __construct(
         protected Request $request,
     ) {}
 
     /**
-     * Build the base Eloquent query.
+     * Build the query.
      */
     abstract public function build(): Builder;
 
     /**
-     * Paginate the query results.
-     *
-     * @param  int  $perPage  Number of items per page.
+     * Paginate query results.
      */
     public function paginate(
         int $perPage = 15,
+        array $columns = ['*']
     ): LengthAwarePaginator {
         return $this->build()
-            ->paginate($perPage)
+            ->paginate(
+                perPage: $perPage,
+                columns: $columns,
+            )
             ->withQueryString();
     }
 
     /**
-     * Apply a callback when a request value exists.
-     *
-     * @param  Builder  $query  Current query builder instance.
-     * @param  string  $key  Request input key.
-     * @param  callable  $callback  Callback executed when value exists.
+     * Apply callback when request input exists.
      */
     protected function whenFilled(
         Builder $query,

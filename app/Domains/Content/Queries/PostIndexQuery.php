@@ -6,15 +6,6 @@ use App\Domains\Blog\Models\Post;
 use App\Domains\Content\Shared\Queries\AbstractQuery;
 use Illuminate\Database\Eloquent\Builder;
 
-/**
- * Post index query.
- *
- * Responsibilities:
- * - Build the post listing query
- * - Apply dashboard filters
- * - Encapsulate post visibility logic
- * - Keep controllers lightweight
- */
 readonly class PostIndexQuery extends AbstractQuery
 {
     /**
@@ -22,7 +13,7 @@ readonly class PostIndexQuery extends AbstractQuery
      */
     public function build(): Builder
     {
-        $query = Post::query();
+        $query = Post::query()->with(['author', 'moderator']);
 
         $this->applySearchFilter($query);
         $this->applyStatusFilter($query);
@@ -40,13 +31,8 @@ readonly class PostIndexQuery extends AbstractQuery
         $this->whenFilled(
             $query,
             'search',
-            function (Builder $query, string $search): void {
-                $query->where(function (Builder $query) use ($search): void {
-                    $query
-                        ->where('title', 'like', "%{$search}%")
-                        ->orWhere('slug', 'like', "%{$search}%");
-                });
-            }
+            fn (Builder $query, string $search): Builder => $query
+                ->where('title', 'like', "%{$search}%")
         );
     }
 
