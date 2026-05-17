@@ -78,7 +78,7 @@ class Post extends Model
         'moderation_status',
         'moderated_at',
         'moderated_by',
-        'moderation_note'
+        'moderation_note',
     ];
 
     protected function casts(): array
