@@ -3,10 +3,15 @@
 namespace App\Models;
 
 use App\Domains\User\Role;
+use Carbon\CarbonImmutable;
 use Database\Factories\UserFactory;
+use Eloquent;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 
@@ -17,39 +22,41 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property string $password
  * @property string|null $two_factor_secret
  * @property string|null $two_factor_recovery_codes
- * @property \Carbon\CarbonImmutable|null $two_factor_confirmed_at
+ * @property CarbonImmutable|null $two_factor_confirmed_at
  * @property Role $role
- * @property \Carbon\CarbonImmutable|null $email_verified_at
- * @property \Carbon\CarbonImmutable|null $last_login
+ * @property CarbonImmutable|null $email_verified_at
+ * @property CarbonImmutable|null $last_login
  * @property string|null $last_login_ip
  * @property string $language
  * @property string|null $theme
  * @property string|null $remember_token
- * @property \Carbon\CarbonImmutable|null $created_at
- * @property \Carbon\CarbonImmutable|null $updated_at
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
+ * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmailVerifiedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereLanguage($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereLastLogin($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereLastLoginIp($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRole($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereTheme($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereTwoFactorConfirmedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereTwoFactorRecoveryCodes($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereTwoFactorSecret($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUsername($value)
- * @mixin \Eloquent
+ *
+ * @method static UserFactory factory($count = null, $state = [])
+ * @method static Builder<static>|User newModelQuery()
+ * @method static Builder<static>|User newQuery()
+ * @method static Builder<static>|User query()
+ * @method static Builder<static>|User whereCreatedAt($value)
+ * @method static Builder<static>|User whereEmail($value)
+ * @method static Builder<static>|User whereEmailVerifiedAt($value)
+ * @method static Builder<static>|User whereId($value)
+ * @method static Builder<static>|User whereLanguage($value)
+ * @method static Builder<static>|User whereLastLogin($value)
+ * @method static Builder<static>|User whereLastLoginIp($value)
+ * @method static Builder<static>|User wherePassword($value)
+ * @method static Builder<static>|User whereRememberToken($value)
+ * @method static Builder<static>|User whereRole($value)
+ * @method static Builder<static>|User whereTheme($value)
+ * @method static Builder<static>|User whereTwoFactorConfirmedAt($value)
+ * @method static Builder<static>|User whereTwoFactorRecoveryCodes($value)
+ * @method static Builder<static>|User whereTwoFactorSecret($value)
+ * @method static Builder<static>|User whereUpdatedAt($value)
+ * @method static Builder<static>|User whereUsername($value)
+ *
+ * @mixin Eloquent
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -71,6 +78,16 @@ class User extends Authenticatable implements MustVerifyEmail
         'last_login_ip',
         'email_verified_at',
     ];
+
+    public function canAccessDashboard(): bool
+    {
+        return $this->role->canAccessDashboard();
+    }
+
+    public function isStaff(): bool
+    {
+        return $this->role->isStaff();
+    }
 
     /**
      * Get the attributes that should be cast.

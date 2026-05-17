@@ -64,13 +64,6 @@ function PostsIndex({ collection }: PostsIndexProps) {
                                         Edit
                                     </Link>
                                 </DropdownMenuItem>
-
-                                <ModerationActions
-                                    item={post}
-                                    approveUrl={approve(post.id).url}
-                                    rejectUrl={reject(post.id).url}
-                                />
-
                                 <DropdownMenuItem asChild>
                                     <Link
                                         href={posts.destroy(post.id).url}
@@ -80,6 +73,11 @@ function PostsIndex({ collection }: PostsIndexProps) {
                                         Delete
                                     </Link>
                                 </DropdownMenuItem>
+                                <ModerationActions
+                                    item={post}
+                                    approveUrl={approve(post.id).url}
+                                    rejectUrl={reject(post.id).url}
+                                />
                             </DropdownActions>
                         ),
                     },

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Data\CMS\Posts\PostFormData;
 use App\Domains\Blog\Actions\StorePostAction;
 use App\Domains\Blog\Actions\UpdatePostAction;
 use App\Domains\Blog\CMS\PostCmsResource;
@@ -45,7 +46,7 @@ class PostCmsController extends AbstractCmsController
         Post $post,
     ): Response {
         return $this->renderEdit($resource, [
-            'post' => $post,
+            'post' => PostFormData::from($post),
         ]);
     }
 
