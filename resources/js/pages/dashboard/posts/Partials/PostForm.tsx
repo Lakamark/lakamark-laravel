@@ -1,5 +1,12 @@
 import type { InertiaFormProps } from '@inertiajs/react';
 
+import {
+    BoldToolbarPlugin,
+    HeadingToolbarPlugin,
+    ItalicToolbarPlugin,
+    StarterKitPreset,
+} from '@lakamark/modulo-editor';
+import { EditorField } from '@/components/FormField/EditorField';
 import { FormInput, FormTextarea } from '@/components/forms/form-field';
 
 type PostStatus = 'draft' | 'published' | 'archived';
@@ -50,18 +57,39 @@ export function PostForm({ form, submitLabel, onSubmit }: PostFormProps) {
                 }
             />
 
-            <FormTextarea
-                id="content"
-                label="Content"
+            <EditorField
+                name="content"
                 value={form.data.content}
-                onChange={(event) =>
-                    form.setData('content', event.target.value)
-                }
+                classes={{
+                    root: 'overflow-hidden rounded-2xl border bg-card',
+                    toolbar: 'flex gap-2 border-b p-2',
+                    body: 'grid grid-cols-2 gap-4 p-4',
+                    input: 'min-h-96 border-l p-4',
+                    preview:
+                        'prose prose-invert max-w-none min-h-96 border p-4',
+                    footer: 'flex gap-2 border-b p-2',
+                    status: 'flex gap-2 border-b p-2',
+                }}
+                presets={[new StarterKitPreset()]}
+                plugins={[
+                    new BoldToolbarPlugin(),
+                    new ItalicToolbarPlugin(),
+                    new HeadingToolbarPlugin(1),
+                    new HeadingToolbarPlugin(2),
+                    new HeadingToolbarPlugin(3),
+                ]}
+                onChange={(value) => form.setData('content', value)}
             />
 
-            <button type="submit" disabled={form.processing}>
-                {submitLabel}
-            </button>
+            <div className="mt-6">
+                <button
+                    type="submit"
+                    disabled={form.processing}
+                    className="inline-flex items-center justify-center rounded-xl border px-4 py-2 text-sm font-medium transition-colors hover:bg-accent focus:ring-2 focus:outline-none"
+                >
+                    {submitLabel}
+                </button>
+            </div>
         </form>
     );
 }

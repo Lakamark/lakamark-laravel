@@ -1,3 +1,4 @@
+import '@lakamark/modulo-editor/reset.css';
 import { createInertiaApp } from '@inertiajs/react';
 
 import type { ComponentType } from 'react';
